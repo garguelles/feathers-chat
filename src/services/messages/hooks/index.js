@@ -3,6 +3,10 @@
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
 const auth = require('feathers-authentication').hooks;
+const populateSender = hooks.populate('sentBy', {
+  service: 'users',
+  fields: 'userId'
+})
 
 exports.before = {
   all: [
@@ -20,9 +24,9 @@ exports.before = {
 
 exports.after = {
   all: [],
-  find: [],
-  get: [],
-  create: [],
+  find: [populateSender],
+  get: [populateSender],
+  create: [populateSender],
   update: [],
   patch: [],
   remove: []
